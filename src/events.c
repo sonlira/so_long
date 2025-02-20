@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:00 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/18 22:43:31 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/20 15:53:04 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ int is_valid_move(t_game *game, int new_x, int new_y)
 	{
 		printf("💰 Recogiste una monedita\n");
         game->map[grid_y][grid_x] = '0';
-		printf("💰 Moneda recogida\n");
 
 	}
 	if (game->map[grid_y][grid_x] == 'E')
