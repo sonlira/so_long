@@ -1,31 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strrchr.c                                   :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kegonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 20:36:40 by kegonzal          #+#    #+#             */
-/*   Updated: 2024/09/17 20:36:41 by kegonzal         ###   ########.fr       */
+/*   Created: 2024/09/21 16:05:06 by abaldelo          #+#    #+#             */
+/*   Updated: 2024/10/08 19:58:09 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdlib.h>
-#include <stdio.h>
 
-char	*ft_strrchr(const char *c, int n)
+char	*ft_strrchr(const char *s, int c)
 {
-	size_t	i;
+	int	longer;
 
-	i = ft_strlen(c);
-	while (i > 0)
+	longer = ft_strlen(s);
+	if ((char)c == '\0')
+		return ((char *)s + longer);
+	while (longer--)
 	{
-		if (c[i] == (char)n)
-			return ((char *)c + i);
-		i--;
+		if (s[longer] == (char)c)
+			return ((char *)s + longer);
 	}
-	if (c[0] == (char)n)
-		return ((char *)c);
-	return (0);
+	return (NULL);
 }

@@ -1,31 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memcpy.c                                        :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kegonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/16 21:20:45 by kegonzal          #+#    #+#             */
-/*   Updated: 2024/09/16 21:20:46 by kegonzal         ###   ########.fr       */
+/*   Created: 2024/09/21 17:53:49 by abaldelo          #+#    #+#             */
+/*   Updated: 2024/10/08 19:58:35 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
-int	ft_memcmp(const void *src1, const void *src2, size_t n)
+int	ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	char	*s1;
-	char	*s2;
-	size_t	i;
+	size_t				i;
+	unsigned char		*ptr_s1;
+	unsigned char		*ptr_s2;
 
-	s1 = (char *) src1;
-	s2 = (char *) src2;
+	ptr_s1 = (unsigned char *)s1;
+	ptr_s2 = (unsigned char *)s2;
 	i = 0;
 	while (i < n)
 	{
-		if (s1[i] != s2[i])
-			return ((unsigned char)s1[i] - (unsigned char)s2[i]);
+		if (ptr_s1[i] != ptr_s2[i])
+			return (ptr_s1[i] - ptr_s2[i]);
 		i++;
 	}
 	return (0);

@@ -3,95 +3,78 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kegonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/20 15:04:35 by kegonzal          #+#    #+#             */
-/*   Updated: 2024/09/20 15:04:36 by kegonzal         ###   ########.fr       */
+/*   Created: 2024/10/07 20:53:59 by abaldelo          #+#    #+#             */
+/*   Updated: 2024/10/19 22:34:45 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-static int	ft_words(const char *s, char c)
+static	size_t	length_word(char const *s, char c)
 {
-	int	i;
-	int	count;
+	size_t	size;
 
-	i = 0;
+	size = 0;
+	while (s[size] && s[size] != c)
+		size++;
+	return (size);
+}
+
+static	size_t	count_words(char const *s, char c)
+{
+	size_t	count;
+
 	count = 0;
-	while (*s != 0)
+	while (*s)
 	{
-		if (*s != c && i == 0)
+		if (*s != c)
 		{
-			i = 1;
 			count++;
+			s += length_word(s, c);
 		}
-		else if (*s == c)
-			i = 0;
-		s++;
+		else
+			s++;
 	}
 	return (count);
 }
 
-static char	*ft_char(const char *str, int start, int finish, char **matrix)
-{
-	char	*word;
-	int		i;
-
-	i = 0;
-	word = malloc((finish - start + 1) * sizeof(char));
-	if (!word)
-	{
-		while (matrix[i] != 0)
-			free(matrix[i++]);
-		free(matrix);
-		return (0);
-	}
-	while (start < finish)
-		word[i++] = str[start++];
-	word[i] = 0;
-	return (word);
-}
-
-static int	ft_fill_matrix(const char *s, char c, char **matrix)
+static	void	free_mem(char **words)
 {
 	size_t	i;
-	size_t	j;
-	size_t	len;
-	int		index;
-	char	*new;
 
-	i = -1;
-	j = 0;
-	index = -1;
-	len = ft_strlen(s);
-	while (++i <= len)
-	{
-		if (s[i] != c && index < 0)
-			index = i;
-		else if ((s[i] == c || i == len) && index >= 0)
-		{
-			new = ft_char(s, index, i, matrix);
-			if (!new)
-				return (0);
-			matrix[j++] = new;
-			index = -1;
-		}
-	}
-	matrix[j] = 0;
-	return (1);
+	i = 0;
+	while (words[i])
+		free(words[i++]);
+	free(words);
 }
 
 char	**ft_split(char const *s, char c)
 {
-	char	**result;
+	char	**words;
+	size_t	ntwords;
+	size_t	i;
 
-	result = ft_calloc((ft_words(s, c) + 1), sizeof(char *));
-	if (!result || !s)
-		return (0);
-	if (!ft_fill_matrix(s, c, result))
-		return (0);
-	return (result);
+	i = 0;
+	if (!s)
+		return (NULL);
+	ntwords = count_words(s, c);
+	words = (char **)malloc((ntwords + 1) * sizeof(char *));
+	if (!words)
+		return (NULL);
+	while (*s)
+	{
+		if (*s != c)
+		{
+			words[i] = ft_substr(s, 0, length_word(s, c));
+			if (!words[i++])
+				return (free_mem(words), NULL);
+			s += length_word(s, c);
+		}
+		else
+			s++;
+	}
+	words[i] = NULL;
+	return (words);
 }

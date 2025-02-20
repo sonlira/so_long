@@ -3,23 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strtrim.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kegonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 16:56:09 by kegonzal          #+#    #+#             */
-/*   Updated: 2024/09/25 16:56:10 by kegonzal         ###   ########.fr       */
+/*   Created: 2024/09/28 00:31:31 by abaldelo          #+#    #+#             */
+/*   Updated: 2024/10/10 19:01:38 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-static int	ft_check(char c, char const *set)
+static int	is_equals(char c, char const *set)
 {
-	size_t	i;
+	int	i;
 
 	i = 0;
-	while (set[i] != 0)
+	while (set[i])
 	{
 		if (set[i] == c)
 			return (1);
@@ -30,23 +28,22 @@ static int	ft_check(char c, char const *set)
 
 char	*ft_strtrim(char const *s1, char const *set)
 {
-	size_t		start;
-	size_t		finish;
-	size_t		i;
-	char		*result;
+	char	*str;
+	int		i;
+	int		j;
 
-	start = 0;
-	while (s1[start] && ft_check(s1[start], set))
-		start++;
-	finish = ft_strlen(s1);
-	while (finish > start && ft_check(s1[finish - 1], set))
-		finish--;
-	result = (char *)malloc(finish - start + 1);
-	if (result == 0)
-		return (0);
+	if (!s1)
+		return (NULL);
 	i = 0;
-	while (start < finish)
-		result[i++] = s1[start++];
-	result[i] = 0;
-	return (result);
+	while (is_equals(s1[i], set))
+		i++;
+	j = ft_strlen(s1) - 1;
+	while (is_equals(s1[j], set))
+		j--;
+	if (i > j)
+		return (ft_strdup(""));
+	str = ft_substr(s1, i, (j - i + 1));
+	if (!str)
+		return (NULL);
+	return (str);
 }

@@ -1,38 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_memmove.c                                   	:+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kegonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/16 21:20:45 by kegonzal          #+#    #+#             */
-/*   Updated: 2024/09/16 21:20:46 by kegonzal         ###   ########.fr       */
+/*   Created: 2024/09/21 17:10:02 by abaldelo          #+#    #+#             */
+/*   Updated: 2024/10/08 19:58:30 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
 
 void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	unsigned char		*d;
-	const unsigned char	*s;
+	size_t				i;
+	unsigned char		*ptr_d;
+	const unsigned char	*ptr_s;
 
-	if (!dest && !src)
-		return (0);
-	d = (unsigned char *) dest;
-	s = (const unsigned char *) src;
-	if (s < d && d < s + n)
+	ptr_d = (unsigned char *)dest;
+	ptr_s = (const unsigned char *)src;
+	i = 0;
+	if (!ptr_d && !ptr_s)
+		return (NULL);
+	if (ptr_s < ptr_d)
 	{
-		s += n;
-		d += n;
 		while (n--)
-			*(--d) = *(--s);
+			ptr_d[n] = ptr_s[n];
 	}
 	else
 	{
-		while (n--)
-			*(d++) = *(s++);
+		while (i < n)
+		{
+			ptr_d[i] = ptr_s[i];
+			i++;
+		}
 	}
 	return (dest);
 }

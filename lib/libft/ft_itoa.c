@@ -3,53 +3,71 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kegonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/25 16:54:15 by kegonzal          #+#    #+#             */
-/*   Updated: 2024/09/25 16:54:16 by kegonzal         ###   ########.fr       */
+/*   Created: 2024/10/04 17:47:45 by abaldelo          #+#    #+#             */
+/*   Updated: 2024/10/10 18:59:57 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
 
-static void	ft_fill(size_t size, char *str, long n)
+static int	num_digits(int n)
 {
-	*(str + size--) = 0;
-	while (n > 0)
+	int	len;
+
+	len = 1;
+	if (n == -2147483648)
 	{
-		*(str + size) = n % 10 + '0';
-		n /= 10;
-		size--;
+		len += 2;
+		n = 147483648;
 	}
-	if (size == 0 && str[1] == 0)
-		*(str + size) = '0';
-	else if (size == 0 && str[1] != 0)
-		*(str + size) = '-';
+	if (n < 0)
+	{
+		n = -n;
+		len++;
+	}
+	while (n >= 10)
+	{
+		n /= 10;
+		len++;
+	}
+	return (len);
+}
+
+static char	*put_nbr(char *s, int n, int i)
+{
+	if (n == -2147483648)
+	{
+		s[0] = '-';
+		s[1] = '2';
+		n = 147483648;
+	}
+	if (n < 0)
+	{
+		n = -n;
+		s[0] = '-';
+	}
+	while (n >= 10)
+	{
+		s[i] = n % 10 + '0';
+		n /= 10;
+		i--;
+	}
+	s[i] = n + '0';
+	return (s);
 }
 
 char	*ft_itoa(int n)
 {
-	char	*result;
-	long	new;
-	size_t	size;
+	int		len;
+	char	*src;
 
-	size = 0;
-	new = n;
-	if (n <= 0)
-	{
-		new *= -1;
-		size = 1;
-	}
-	while (n != 0)
-	{
-		n /= 10;
-		size++;
-	}
-	result = (char *)malloc(size + 1);
-	if (result == 0)
-		return (0);
-	ft_fill(size, result, new);
-	return (result);
+	len = num_digits(n);
+	src = (char *) malloc(len + 1);
+	if (!src)
+		return (NULL);
+	src = put_nbr(src, n, len - 1);
+	src[len] = '\0';
+	return (src);
 }

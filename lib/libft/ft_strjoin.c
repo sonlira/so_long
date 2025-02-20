@@ -3,38 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: kegonzal <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/18 17:22:15 by kegonzal          #+#    #+#             */
-/*   Updated: 2024/09/18 17:22:16 by kegonzal         ###   ########.fr       */
+/*   Created: 2024/09/27 16:11:57 by abaldelo          #+#    #+#             */
+/*   Updated: 2024/10/10 19:00:08 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-#include <stdio.h>
-#include <stdlib.h>
+
+static size_t	copy_str(size_t i, size_t n, char *dst, char const *src)
+{
+	while (i < n && *src)
+	{
+		dst[i] = *src;
+		src++;
+		i++;
+	}
+	return (i);
+}
 
 char	*ft_strjoin(char const *s1, char const *s2)
 {
-	char	*result;
-	int		i;
-	int		j;
+	char	*str;
+	size_t	total_size;
+	size_t	i;
 
-	result = (char *)malloc(ft_strlen(s1) + ft_strlen(s2) + 1);
-	if (result == 0)
+	if (!s1 || !s2)
 		return (NULL);
 	i = 0;
-	while (s1[i] != 0)
-	{
-		result[i] = s1[i];
-		i++;
-	}
-	j = 0;
-	while (s2[j] != 0)
-	{
-		result[i + j] = s2[j];
-		j++;
-	}
-	result[i + j] = 0;
-	return (result);
+	total_size = (ft_strlen(s1) + ft_strlen(s2)) + 1;
+	str = (char *) malloc(total_size * sizeof(char));
+	if (!str)
+		return (NULL);
+	i = copy_str(i, total_size, str, s1);
+	i = copy_str(i, total_size, str, s2);
+	str[i] = '\0';
+	return (str);
 }
