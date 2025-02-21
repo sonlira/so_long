@@ -6,24 +6,22 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:19 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/21 23:04:23 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/21 23:39:20 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-void	is_rectangular(t_game *game)
+void	is_rectangular(t_map *map)
 {
-	size_t	col;
-	size_t	row;
+	int	row;
 
-	col = ft_strlen(game->map->map[0]);
 	row = 1;
-	while (game->map->map[row])
+	while (map->map[row])
 	{
-		if (ft_strlen(game->map->map[row]) != col)
+		if ((int)ft_strlen(map->map[row]) != map->cols)
 		{
-			free_matriz(&game->map->map);
+			free_matriz(&map->map);
 			error_exit("Map is not valid, not is rectangular");
 		}
 		row++;
@@ -44,23 +42,23 @@ static int	check_up_do(char *row)
 	return (1);
 }
 
-void	is_surrounded_by_one(t_game *game, int len)
+void	is_surrounded_by_one(t_map *map, int lines)
 {
 	int	last;
 	int	row;
 
-	last = ft_strlen(game->map->map[0]) - 1;
+	last = map->cols - 1;
 	row = 0;
-	if (check_up_do(game->map->map[0]) == 0 || check_up_do(game->map->map[len - 1]) == 0)
+	if (check_up_do(map->map[0]) == 0 || check_up_do(map->map[lines - 1]) == 0)
 	{
-		free_matriz(&game->map);
+		free_matriz(&map->map);
 		error_exit("The map must be surrounded by '1'");
 	}
-	while (row < len)
+	while (row < lines)
 	{
-		if (!(game->map->map[row][0] == '1' && game->map->map[row][last] == '1'))
+		if (!(map->map[row][0] == '1' && map->map[row][last] == '1'))
 		{
-			free_matriz(&game->map);
+			free_matriz(&map->map);
 			error_exit("The map must be surrounded by '1'");
 		}
 		row++;
@@ -88,7 +86,7 @@ static int	count_item(char *row, char item)
 	return (count);
 }
 
-void	check_items(t_game *game, int len)
+void	check_items(t_game *game, int lines)
 {
 	int	c_count;
 	int	p_count;
@@ -99,40 +97,40 @@ void	check_items(t_game *game, int len)
 	e_count = 0;
 	p_count = 0;
 	row = 1;
-	while (row < len - 1)
+	while (row < lines - 1)
 	{
-		c_count += count_item(game->map[row], 'C');
-		p_count += count_item(game->map[row], 'P');
-		e_count += count_item(game->map[row], 'E');
+		c_count += count_item(game->map->map[row], 'C');
+		p_count += count_item(game->map->map[row], 'P');
+		e_count += count_item(game->map->map[row], 'E');
 		row++;
 	}
 	if (p_count != 1 || e_count != 1 || c_count < 1)
 	{
-		free_matriz(&game->map);
+		free_matriz(&game->map->map);
 		error_exit("Number of invalid items");
 	}
-	game->coins = c_count;
+	game->t_coins = c_count;
 }
 
-void	check_valid_items(t_game *game, int len)
+void	check_valid_items(t_map *map)
 {
 	int	row;
 	int	col;
 
 	row = 1;
-	while (row < len - 1)
+	while (row < map->rows -1)
 	{
 		col = 0;
-		while (game->map[row][col])
+		while (map->map[row][col])
 		{
-			if (game->map[row][col] == '0')
+			if (map->map[row][col] == '0')
 			{
 				col++;
 				continue ;
 			}
-			else if (!ft_strchr("1PEC", game->map[row][col]))
+			else if (!ft_strchr("1PEC", map->map[row][col]))
 			{
-				free_matriz(&game->map);
+				free_matriz(&map->map);
 				error_exit("Item not valid");
 			}
 			col++;
@@ -141,15 +139,15 @@ void	check_valid_items(t_game *game, int len)
 	}
 }
 
-static void	clean_map(t_game *game, int lines)
+static void	clean_map(t_map *map, int lines)
 {
 	int		row;
 	char	*line;
 
 	row = 0;
-	while (row < lines)
+	while (row < lines -1)
 	{
-		line = ft_strrchr(game->map->map[row], '\n');
+		line = ft_strrchr(map->map[row], '\n');
 		if (line)
 			line[0] = '\0';
 		row++;
@@ -180,9 +178,11 @@ void	init_map(t_game *game, char *file, int lines)
 		i++;
 	}
 	close(fd);
-	clean_map(game, lines);
-	is_rectangular(game);
-	is_surrounded_by_one(game, lines);
+	clean_map(game->map, lines);
+	game->map->rows = lines;
+	game->map->cols = ft_strlen(game->map->map[0]);
+	is_rectangular(game->map);
+	is_surrounded_by_one(game->map, lines);
 	check_items(game, lines);
-	check_valid_items(game, lines);
+	check_valid_items(game->map);
 }
