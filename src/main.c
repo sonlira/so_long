@@ -6,43 +6,36 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:16 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/20 22:05:50 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:09:15 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	close_window(void)
-{
-	exit (0);
-	return (0);
-}
-
 int	main(int argc, char **argv)
 {
-	char	*path_map;
+	char	*map_path;
 	int		fd;
-	int		lines;
 
 	if (argc != 2)
 	{
-		ft_putendl_fd("Usage: ./so_long <archivo.ber>", EXIT_FAILURE);
+		ft_putendl_fd("Usage: ./so_long <file.ber>", EXIT_FAILURE);
 		return (EXIT_FAILURE);
 	}
-	path_map = ft_strjoin("maps/", argv[1]);
-	if (!path_map)
+	map_path = ft_strjoin("maps/", argv[1]);
+	if (!map_path)
 		return (EXIT_FAILURE);
-	fd = open(path_map, O_RDONLY);
-	printf("fd = %d path = %s\n", fd, path_map);
+	fd = open(map_path, O_RDONLY);
 	if (fd == -1)
 	{
-		free(path_map);
-		perror ("Error al abrir el archivo .ber ");
+		free(map_path);
+		perror ("Error opening the file");
 		return (EXIT_FAILURE);
 	}
-	lines = file_lines_ber(fd);
-	close(fd);
-	init_the_so_long(path_map, lines);
+	init_the_so_long(map_path, file_lines_ber(fd));
+	return (EXIT_SUCCESS);
+}
+
 /////////
 	// t_game game;
 
@@ -59,5 +52,3 @@ int	main(int argc, char **argv)
 
 
 	// mlx_loop(game.mlx);
-	return (EXIT_SUCCESS);
-}

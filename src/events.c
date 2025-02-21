@@ -6,11 +6,17 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:00 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/20 15:53:04 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/21 14:43:28 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
+
+int	close_window(void)
+{
+	exit (0);
+	return (0);
+}
 
 int is_valid_move(t_game *game, int new_x, int new_y)
 {

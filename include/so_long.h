@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:38:11 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/20 21:32:57 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/21 22:51:57 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,33 @@ enum
 	KEY_D = 100
 };
 
+typedef struct s_play
+{
+	int		pos_x;
+	int		pos_y;
+	int		p_coins;
+}	t_play;
+
+typedef struct s_map
+{
+	char	**map;
+	int		rows;
+	int		cols;
+}	t_map;
+
 typedef struct s_game
 {
 	void	*mlx;
 	void	*win;
-	void	*img;
-	int		img_x;
-	int		img_y;
-	char	**map;
+	void	*character;
+	void	*wall;
+	void	*exit;
+	void	*floor;
+	int		t_coins;
+	t_play	*player;
+	t_map	*map;
 }	t_game;
+
 
 void	error_exit(const char *msg);
 int		file_lines_ber(int fd);

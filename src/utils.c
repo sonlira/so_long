@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:28 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/20 19:38:41 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/21 15:12:07 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	error_exit(const char *msg)
 {
-	perror(msg);
+	// perror(msg);
+	ft_putendl_fd((char *)msg, EXIT_FAILURE);
 	exit(EXIT_FAILURE);
 }
 
