@@ -6,12 +6,13 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:19 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/21 23:39:20 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/24 00:28:15 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
+/*==================================*/
 void	is_rectangular(t_map *map)
 {
 	int	row;
@@ -27,7 +28,9 @@ void	is_rectangular(t_map *map)
 		row++;
 	}
 }
+/*==================================*/
 
+/*==================================*/
 static int	check_up_do(char *row)
 {
 	int	col;
@@ -64,7 +67,9 @@ void	is_surrounded_by_one(t_map *map, int lines)
 		row++;
 	}
 }
+/*==================================*/
 
+/*==================================*/
 static int	count_item(char *row, char item)
 {
 	int	col;
@@ -111,7 +116,9 @@ void	check_items(t_game *game, int lines)
 	}
 	game->t_coins = c_count;
 }
+/*==================================*/
 
+/*==================================*/
 void	check_valid_items(t_map *map)
 {
 	int	row;
@@ -138,7 +145,65 @@ void	check_valid_items(t_map *map)
 		row++;
 	}
 }
+/*==================================*/
+/*==================================*/
+static void get_pocision_of_p(t_game *game)
+{
+	int	row;
+	int	col;
 
+	row = 0;
+	while (row < game->map->rows)
+	{
+		col = 0;
+		while (col < game->map->cols)
+		{
+			if (game->map->map[row][col] == 'P')
+			{
+				game->player->pos_x = row;
+				game->player->pos_y = col;
+				row = game->map->rows;
+				break ;
+			}
+			col++;
+		}
+		row++;
+	}
+}
+
+static	int *create_a_map_copy(t_map *map)
+{
+	int	**matriz;
+	int	row;
+
+	matriz = ft_calloc(map->rows + 1, sizeof(int *));
+	if (!matriz)
+		return (NULL);
+	row = 0;
+	while (row < map->rows)
+	{
+		matriz[row] = ft_calloc(map->cols + 1, sizeof(int));
+		if (!matriz[row])
+			return (free_matriz_int(&matriz, map->rows), NULL);
+		row++;
+	}
+	return (matriz);
+}
+
+void	check_accessibility(t_game *game)
+{
+	int	**visited;
+
+	get_pocision_of_p(game);
+	visited = create_a_map_copy(game->map);
+	if (!visited)
+		error_exit("An error occurred while checking the map access");
+	visited[game->player->pos_x][game->player->pos_y] = 1;
+	
+}
+
+/*==================================*/
+/*==================================*/
 static void	clean_map(t_map *map, int lines)
 {
 	int		row;
@@ -185,4 +250,6 @@ void	init_map(t_game *game, char *file, int lines)
 	is_surrounded_by_one(game->map, lines);
 	check_items(game, lines);
 	check_valid_items(game->map);
+	check_accessibility(game);
 }
+/*==================================*/

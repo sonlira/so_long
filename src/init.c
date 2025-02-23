@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:12 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/21 23:33:42 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/23 21:09:56 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,10 @@ void	init_the_so_long(char *file, int lines)
 {
 	t_game	game;
 	t_map	map;
+	t_play	player;
+
 	game.map = &map;
+	game.player = &player;
 	// game.mlx = mlx_init();
 	// game.win = mlx_new_window(game.mlx, 800, 600, "so_long");
 	if (lines <= 2)
