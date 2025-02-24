@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:19 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/24 00:28:15 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/24 19:07:07 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ static void get_pocision_of_p(t_game *game)
 	}
 }
 
-static	int *create_a_map_copy(t_map *map)
+static	int **create_a_map_copy(t_map *map)
 {
 	int	**matriz;
 	int	row;
@@ -189,17 +189,137 @@ static	int *create_a_map_copy(t_map *map)
 	}
 	return (matriz);
 }
+/*-------------------------*/
+
+
+
+t_queue *create_queue(int size)
+{
+	t_queue *q;
+
+	q = malloc(sizeof(t_queue));
+	if (!q)
+		return (NULL);
+	q->points = malloc(sizeof(t_point) * size);
+	if (!q->points)
+		return (free(q), NULL);
+	q->front = 0;
+	q->final = 0;
+	q->c_coins = 0;
+	q->with_exit = 0;
+	q->size = size;
+	return (q);
+}
+
+void enqueue(t_queue *q, int row, int col)
+{
+	if (q->final == q->size)
+		return ;
+	q->points[q->final].row = row;
+	q->points[q->final].col = col;
+	q->final++;
+}
+
+t_point dequeue(t_queue *q)
+{
+	t_point p;
+
+	p.col = -1;
+	p.row = -1;
+	if (q->front == q->final)
+		return (p);
+	p = q->points[q->front];
+	q->front++;
+	return (p);
+}
+/*-------------------------*/
+/*-------bfs------------------*/
+void get_moves(int moves[4][2])
+{
+	moves[0][0] = -1;
+	moves[0][1] = 0;
+	moves[1][0] = 1;
+	moves[1][1] = 0;
+	moves[2][0] = 0;
+	moves[2][1] = -1;
+	moves[3][0] = 0;
+	moves[3][1] = 1;
+}
+int is_valid_pos(t_map *map, int **visited, int nr, int nc)
+{
+	if ((nr < 0 && nr >= map->rows) || (nc < 0 && nc >= map->cols))
+		return (0);
+	if (visited[nr][nc] == 1)
+		return (0);
+	if (map->map[nr][nc] == '1')
+		return (0);
+	return (1);
+}
+
+void	apply_the_movements(t_map *map, int **v, t_queue *q, int m[4][2], t_point c)
+{
+	int	i;
+	int new_row;
+	int new_col;
+
+	i = 0;
+	while (i < 4)
+	{
+		new_row = c.row + m[i][0];
+		new_col = c.col + m[i][1];
+		if (is_valid_pos(map, v, new_row, new_col))
+		{
+			if (map->map[new_row][new_col] == 'C')
+				q->c_coins++;
+			if (map->map[new_row][new_col] == 'E')
+				q->with_exit = 1;
+			v[new_row][new_col] = 1;
+			enqueue(q, new_row, new_col);
+		}
+		i++;
+	}
+}
+int find_coins(t_game *game, int **visited, t_queue *q)
+{
+	t_point current;
+	int	moves[4][2];
+
+	enqueue(q, game->player->pos_x, game->player->pos_y);
+	get_moves(moves);
+	(void)visited;
+	while (q->front != q->final)
+	{
+		current = dequeue(q);
+		apply_the_movements(game->map, visited, q, moves, current);
+	}
+	if (q->c_coins != game->t_coins || q->with_exit != 1)
+		return (0);
+	return (1);
+}
+
+
+/*-------------------------*/
 
 void	check_accessibility(t_game *game)
 {
-	int	**visited;
+	int		**visited;
+	t_queue	*q;
 
 	get_pocision_of_p(game);
 	visited = create_a_map_copy(game->map);
 	if (!visited)
 		error_exit("An error occurred while checking the map access");
 	visited[game->player->pos_x][game->player->pos_y] = 1;
-	
+	q = create_queue(game->map->rows * game->map->cols);
+	if (!q)
+		error_exit("An error occurred while checking the map access");
+	if (find_coins(game, visited, q) == 0)
+	{
+		free_queue(q);
+		free_matriz_int(&visited, game->map->rows);
+		error_exit("Unaccessible exit or collectibles");
+	}
+	free_matriz_int(&visited, game->map->rows);
 }
 
 /*==================================*/
