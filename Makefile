@@ -6,7 +6,7 @@
 #    By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/12 17:49:36 by abaldelo          #+#    #+#              #
-#    Updated: 2025/02/24 18:39:40 by abaldelo         ###   ########.fr        #
+#    Updated: 2025/02/25 23:03:51 by abaldelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,8 +15,8 @@ NAME = so_long
 
 # Compilador y flags
 CC = cc
-CFLAGS = -Wall -Wextra -Werror -g3 -fsanitize=address -Iinclude -Ilib/minilibx-linux -Ilib/libft
-
+CFLAGS = -Wall -Wextra -Werror -Iinclude -Ilib/minilibx-linux -Ilib/libft
+ #-g3 -fsanitize=address
 # Directorios
 SRCDIR = src
 OBJDIR = obj

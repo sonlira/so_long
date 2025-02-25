@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:28 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/21 15:12:07 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/25 18:43:48 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,4 +38,44 @@ int	file_lines_ber(int fd)
 	}
 	close(fd);
 	return (count_line);
+}
+
+t_queue	*create_queue(int size)
+{
+	t_queue	*queue;
+
+	queue = malloc(sizeof(t_queue));
+	if (!queue)
+		return (NULL);
+	queue->points = malloc(sizeof(t_point) * size);
+	if (!queue->points)
+		return (free(queue), NULL);
+	queue->front = 0;
+	queue->final = 0;
+	queue->c_coins = 0;
+	queue->with_exit = 0;
+	queue->size = size;
+	return (queue);
+}
+
+void	enqueue(t_queue *queue, int row, int col)
+{
+	if (queue->final == queue->size)
+		return ;
+	queue->points[queue->final].row = row;
+	queue->points[queue->final].col = col;
+	queue->final++;
+}
+
+t_point	dequeue(t_queue *queue)
+{
+	t_point	point;
+
+	point.col = -1;
+	point.row = -1;
+	if (queue->front == queue->final)
+		return (point);
+	point = queue->points[queue->front];
+	queue->front++;
+	return (point);
 }

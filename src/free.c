@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:09 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/24 18:18:15 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/25 23:27:13 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,22 @@ void	free_matriz(char ***matriz)
 }
 
 void	free_matriz_int(int ***matriz, size_t size)
+{
+	size_t	i;
+
+	i = 0;
+	if (!matriz || !*matriz)
+		return ;
+	while (i < size)
+	{
+		free((*matriz)[i]);
+		i++;
+	}
+	free(*matriz);
+	*matriz = NULL;
+}
+
+void	free_matriz_point(t_point ***matriz, size_t size)
 {
 	size_t	i;
 
