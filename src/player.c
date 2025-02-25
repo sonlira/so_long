@@ -6,58 +6,13 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:22 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/25 23:41:28 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/26 00:15:30 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-static int	is_valid_pos(t_map *map, int **visited, int nr, int nc)
-{
-	if ((nr < 0 && nr >= map->rows) || (nc < 0 && nc >= map->cols))
-		return (0);
-	if (visited[nr][nc] != -1)
-		return (0);
-	if (map->map[nr][nc] == WALL)
-		return (0);
-	return (1);
-}
-
-void	measure_away(t_map *map, int **away, t_queue *queue, t_point point)
-{
-	int	i;
-	int	new_row;
-	int	new_col;
-
-	i = 0;
-	while (i < 4)
-	{
-		new_row = point.row + map->moves[i].row;
-		new_col = point.col + map->moves[i].col;
-		if (is_valid_pos(map, away, new_row, new_col))
-		{
-			away[new_row][new_col] = away[point.row][point.col] + 1;
-			enqueue(queue, new_row, new_col);
-		}
-		i++;
-	}
-}
-
-void	check_distance(t_game *game, int **away, t_queue *queue)
-{
-	t_point	point;
-
-	enqueue(queue, game->player->pos_x, game->player->pos_y);
-
-	while (queue->front != queue->final)
-	{
-		point = dequeue(queue);
-		measure_away(game->map, away, queue, point);
-	}
-}
-/*============PRIOR==============================================*/
-
-t_point	**start_matriz_point(t_map *map)
+static t_point	**start_matriz_point(t_map *map)
 {
 	t_point	**matriz;
 	int		row;
@@ -85,6 +40,47 @@ t_point	**start_matriz_point(t_map *map)
 	}
 	return (matriz);
 }
+
+static int	is_valid_pos(t_map *map, int **visited, int nr, int nc)
+{
+	if ((nr < 0 && nr >= map->rows) || (nc < 0 && nc >= map->cols))
+		return (0);
+	if (visited[nr][nc] != -1)
+		return (0);
+	if (map->map[nr][nc] == WALL)
+		return (0);
+	return (1);
+}
+
+static void	dis_and_pri_bfs(t_game *game, int **away, t_point **pri, t_queue *q)
+{
+	t_point	point;
+	int		i;
+	int		new_row;
+	int		new_col;
+
+	enqueue(q, game->player->pos_x, game->player->pos_y);
+	while (q->front != q->final)
+	{
+		point = dequeue(q);
+		i = 0;
+		while (i < MOVES)
+		{
+			new_row = point.row + game->map->moves[i].row;
+			new_col = point.col + game->map->moves[i].col;
+			if (is_valid_pos(game->map, away, new_row, new_col))
+			{
+				away[new_row][new_col] = away[point.row][point.col] + 1;
+				pri[new_row][new_col].row = point.row;
+				pri[new_row][new_col].col = point.col;
+				enqueue(q, new_row, new_col);
+			}
+			i++;
+		}
+	}
+}
+/*============PRIOR==============================================*/
+
 
 // void	get_prior(t_map *map, int **prior, t_queue *queue, t_point point)
 // {
@@ -125,20 +121,17 @@ void	find_the_shortest_way(t_game *game)
 {
 	int			**distance;
 	t_point		**prior;
-	t_queue		*q;
-	// t_queue		*q2;
+	t_queue		*queue;
 
 	distance = start_matriz_int(game->map, -1);
 	prior = start_matriz_point(game->map);
-	if (!distance)
+	if (!distance || !prior)
 		error_exit("An error occurred when checking the shortest route");
 	distance[game->player->pos_x][game->player->pos_y] = 0;
-	q = create_queue(game->map->rows * game->map->cols);
-	// q2 = create_queue(game->map->rows * game->map->cols);
-	if (!q)
+	queue = create_queue(game->map->rows * game->map->cols);
+	if (!queue)
 		error_exit("An error occurred when checking the shortest route");
-	check_distance(game, distance, q);
-	// check_prior(game, prior, q2);
+	dis_and_pri_bfs(game, distance, prior, queue);
 	int i = 0;
 	while (i < game->map->rows)
 	{
@@ -151,7 +144,7 @@ void	find_the_shortest_way(t_game *game)
 		printf("\n");
 		i++;
 	}
-	free_queue(q);
+	free_queue(queue);
 	// free_queue(q2);
 	free_matriz_point(&prior, game->map->rows);
 	free_matriz_int(&distance, game->map->rows);

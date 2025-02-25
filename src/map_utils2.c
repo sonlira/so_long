@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 21:52:39 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/25 22:52:32 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/26 00:13:30 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	apply_moves(t_map *map, int **visited, t_queue *q, t_point point)
 	int	new_col;
 
 	i = 0;
-	while (i < 4)
+	while (i < MOVES)
 	{
 		new_row = point.row + map->moves[i].row;
 		new_col = point.col + map->moves[i].col;

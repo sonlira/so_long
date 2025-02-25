@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:38:11 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/25 23:40:45 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/26 00:12:34 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ enum
 	KEY_A		= 97,
 	KEY_S		= 115,
 	KEY_D		= 100,
+	MOVES		= 4,
 	WALL		= '1',
 	FLOOR		= '0',
 	PLAYER		= 'P',
