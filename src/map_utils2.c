@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/25 21:52:39 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/26 00:13:30 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/26 00:17:57 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static int	find_coins_bfs(t_game *game, int **visited, t_queue *queue)
 	t_point	point;
 
 	get_moves(game->map->moves);
-	enqueue(queue, game->player->pos_x, game->player->pos_y);
+	enqueue(queue, game->player->row, game->player->col);
 	while (queue->front != queue->final)
 	{
 		point = dequeue(queue);
@@ -85,7 +85,7 @@ void	check_accessibility(t_game *game)
 	visited = start_matriz_int(game->map, 0);
 	if (!visited)
 		error_exit("An error occurred while checking the map access");
-	visited[game->player->pos_x][game->player->pos_y] = 1;
+	visited[game->player->row][game->player->col] = 1;
 	q = create_queue(game->map->rows * game->map->cols);
 	if (!q)
 		error_exit("An error occurred while checking the map access");

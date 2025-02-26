@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:19 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/25 22:59:30 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/26 00:31:17 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ static void	get_pocision_of_p(t_game *game)
 		{
 			if (game->map->map[row][col] == PLAYER)
 			{
-				game->player->pos_x = row;
-				game->player->pos_y = col;
+				game->player->row = row;
+				game->player->col = col;
 				row = game->map->rows;
 				break ;
 			}

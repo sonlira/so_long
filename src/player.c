@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:22 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/26 00:15:30 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/26 01:01:22 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,6 @@ static t_point	**start_matriz_point(t_map *map)
 	int		row;
 	int		col;
 
-	if (!map)
-		return (NULL);
 	matriz = ft_calloc(map->rows + 1, sizeof(t_point *));
 	if (!matriz)
 		return (NULL);
@@ -59,7 +57,7 @@ static void	dis_and_pri_bfs(t_game *game, int **away, t_point **pri, t_queue *q)
 	int		new_row;
 	int		new_col;
 
-	enqueue(q, game->player->pos_x, game->player->pos_y);
+	enqueue(q, game->player->row, game->player->col);
 	while (q->front != q->final)
 	{
 		point = dequeue(q);
@@ -79,73 +77,56 @@ static void	dis_and_pri_bfs(t_game *game, int **away, t_point **pri, t_queue *q)
 		}
 	}
 }
-/*============PRIOR==============================================*/
 
+static void	get_the_char_position(t_game *game, t_point *point, char character)
+{
+	int	row;
+	int	col;
 
-// void	get_prior(t_map *map, int **prior, t_queue *queue, t_point point)
-// {
-// 	int	i;
-// 	int	moves[4][2];
-// 	int	new_row;
-// 	int	new_col;
+	row = 0;
+	while (row < game->map->rows)
+	{
+		col = 0;
+		while (col < game->map->cols)
+		{
+			if (game->map->map[row][col] == character)
+			{
+				point->row = row;
+				point->col = col;
+				row = game->map->rows;
+				break ;
+			}
+			col++;
+		}
+		row++;
+	}
+}
 
-// 	get_moves(moves);
-// 	i = 0;
-// 	while (i < 4)
-// 	{
-// 		new_row = point.row + moves[i][0];
-// 		new_col = point.col + moves[i][1];
-// 		if (is_valid_pos(map, prior, new_row, new_col))
-// 		{
-// 			prior[new_row] = point.row;
-// 			prior[new_col] = point.col;
-// 			enqueue(queue, new_row, new_col);
-// 		}
-// 		i++;
-// 	}
-// }
-
-// void 	check_prior(t_game *game, int **prior, t_queue *q)
-// {
-// 	t_point current;
-
-// 	enqueue(q, game->player->pos_x, game->player->pos_y);
-
-// 	while (q->front != q->final)
-// 	{
-// 		current = dequeue(q);
-// 		get_prior(game->map, prior, q, current);
-// 	}
-// }
 void	find_the_shortest_way(t_game *game)
 {
 	int			**distance;
 	t_point		**prior;
 	t_queue		*queue;
+	t_point		actual;
 
 	distance = start_matriz_int(game->map, -1);
 	prior = start_matriz_point(game->map);
 	if (!distance || !prior)
 		error_exit("An error occurred when checking the shortest route");
-	distance[game->player->pos_x][game->player->pos_y] = 0;
+	distance[game->player->row][game->player->col] = 0;
 	queue = create_queue(game->map->rows * game->map->cols);
 	if (!queue)
 		error_exit("An error occurred when checking the shortest route");
 	dis_and_pri_bfs(game, distance, prior, queue);
-	int i = 0;
-	while (i < game->map->rows)
+	get_the_char_position(game, &actual, EXIT);
+	while (actual.row != -1 && actual.col != -1)
 	{
-		int j = 0;
-		while (j < game->map->cols)
-		{
-			printf("(%d, %d) ", prior[i][j].row, prior[i][j].col);
-			j++;
-		}
-		printf("\n");
-		i++;
+		printf("(%d, %d) <- ", actual.row, actual.col);
+		actual = prior[actual.row][actual.col];
 	}
+	printf("\n");
+
 	free_queue(queue);
-	// free_queue(q2);
 	free_matriz_point(&prior, game->map->rows);
 	free_matriz_int(&distance, game->map->rows);
 }

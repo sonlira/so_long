@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:38:11 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/26 00:12:34 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/26 00:31:37 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ typedef struct s_queue
 
 typedef struct s_play
 {
-	int		pos_x;
-	int		pos_y;
+	int		row;
+	int		col;
 	int		p_coins;
 }	t_play;
 
