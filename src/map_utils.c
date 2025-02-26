@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/20 18:18:51 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/25 22:59:30 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/26 14:38:13 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,13 +20,13 @@ int	**start_matriz_int(t_map *map, int number)
 
 	if (!map)
 		return (NULL);
-	matriz = ft_calloc(map->rows + 1, sizeof(int *));
+	matriz = ft_calloc(map->rows, sizeof(int *));
 	if (!matriz)
 		return (NULL);
 	row = 0;
 	while (row < map->rows)
 	{
-		matriz[row] = ft_calloc(map->cols + 1, sizeof(int));
+		matriz[row] = ft_calloc(map->cols, sizeof(int));
 		if (!matriz[row])
 			return (free_matriz_int(&matriz, map->rows), NULL);
 		col = 0;

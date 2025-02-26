@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:09 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/25 23:27:13 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/26 22:38:11 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,10 +60,10 @@ void	free_matriz_point(t_point ***matriz, size_t size)
 	*matriz = NULL;
 }
 
-void	free_queue(t_queue *q)
+void	free_queue(t_queue *queue)
 {
-	if (!q->points)
+	if (!queue->points)
 		return ;
-	free(q->points);
-	free(q);
+	free(queue->points);
+	free(queue);
 }

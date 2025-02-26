@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:38:11 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/26 00:31:37 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/26 23:20:22 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@
 # include <unistd.h>
 # include <stdio.h>
 # include <fcntl.h>
+# include <limits.h>
 
 enum
 {
@@ -53,7 +54,7 @@ typedef struct s_queue
 	int		final;
 	int		size;
 	int		c_coins;
-	int		with_exit;	
+	int		with_exit;
 }	t_queue;
 
 typedef struct s_play
@@ -61,6 +62,7 @@ typedef struct s_play
 	int		row;
 	int		col;
 	int		p_coins;
+	int		p_moves;
 }	t_play;
 
 typedef struct s_map
@@ -80,8 +82,11 @@ typedef struct s_game
 	void	*exit;
 	void	*floor;
 	int		t_coins;
+	int		max_moves;
 	t_play	*player;
 	t_map	*map;
+	t_point	*locations;
+	t_point	p_exit;
 }	t_game;
 
 
@@ -104,6 +109,9 @@ void	check_items(t_game *game, int lines);
 void	check_valid_items(t_map *map);
 // MAP_UTILS2.C
 void	check_accessibility(t_game *game);
+
+// shortest_way_utils.c
+int		get_pocisions_of_items(t_game *game);
 
 
 void	free_matriz(char ***matriz);
