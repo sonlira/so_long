@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:22 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/27 00:11:53 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/27 23:59:08 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,29 +148,82 @@ int	**calculate_costs(t_game *g)
 	return (costs);
 }
 
+void	item_visited(int **costs, int col, int size)
+{
+	int	row;
+
+	row = -1;
+	while (++row < size)
+		costs[row][col] = -1; 
+}
+
+int	is_time_to_e(int **costs, int row, int size)
+{
+	int col;
+	int	count_v;
+
+	col = -1;
+	count_v = 0;
+	while (++col < size)
+	{
+		if (costs[row][col] == -1)
+			count_v++;
+	}
+	return (count_v == size -1);
+}
+
 int	low_cost(t_game *game)
 {
 	int		**costs;
-	int		low_cost;
-	int		sum_cost;
+	t_rute	ic;
+	int		size;
 	t_point	rc;
+	int		visit;
+	t_rute	rute[1024];
 
 	costs = calculate_costs(game);
 	if (!costs)
-		return (-1);
-	low_cost = INT_MAX;
-	rc.row = -1;
-	while (++rc.row < game->t_coins + 2)
+		return (free(game->locations),-1);
+	rute[0].rc = game->locations[0];
+	item_visited(costs, 0, game->t_coins + 2);
+	ic.rc.col = 1;
+	size = game->t_coins + 1;
+	rc.row = 0;
+	while (size != game->t_coins + 2)
 	{
+		ic.cost = INT_MAX;
+		visit = 0;
+		if (is_time_to_e(costs, rc.row, size))
+			size++;
 		rc.col = -1;
-		sum_cost = 0;
-		while (++rc.col < game->t_coins + 2)
-			sum_cost += costs[rc.row][rc.col];
-		if (sum_cost < low_cost)
-			low_cost = sum_cost;
-		printf("fila[ %d ] cost =( %d )\n", rc.row, low_cost);
+		while (++rc.col < size)
+		{
+			if (costs[rc.row][rc.col] != 0 && costs[rc.row][rc.col] != -1)
+			{
+				if (costs[rc.row][rc.col] < ic.cost)
+				{
+					ic.cost = costs[rc.row][rc.col];
+					rute[ic.rc.col].rc = game->locations[rc.col];
+					rute[ic.rc.col].cost = ic.cost;
+					visit = rc.col;
+				}
+			}
+		}
+		item_visited(costs, visit, game->t_coins + 2);
+		ic.rc.col++;
+		rc.row = visit;
 	}
-	return (free_matriz_int(&costs, game->t_coins + 2), low_cost);
+	rc.col = -1;
+	while(++rc.col < size)
+	{
+		if(costs[visit][rc.col] != -1)
+		{
+			rute[ic.rc.col].rc = game->locations[rc.col];
+			rute[ic.rc.col].cost = costs[visit][rc.col];
+			visit = rc.col;
+		}
+	}
+	return (free(game->locations),free_matriz_int(&costs, game->t_coins + 2), 0);
 }
 
 /*====================================*/

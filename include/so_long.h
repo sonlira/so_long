@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:38:11 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/26 23:20:22 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/27 19:21:18 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,18 @@ enum
 	EXIT		= 'E',
 };
 
+
 typedef struct s_point
 {
 	int	row;
 	int	col;
 }	t_point;
+
+typedef struct s_rute
+{
+	t_point rc;
+	int		cost;
+}	t_rute;
 
 typedef struct s_queue
 {
