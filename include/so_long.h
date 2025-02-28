@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:38:11 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/27 19:21:18 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/28 20:23:55 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ typedef struct s_point
 
 typedef struct s_rute
 {
-	t_point rc;
+	t_point	rc;
 	int		cost;
 }	t_rute;
 
@@ -94,6 +94,7 @@ typedef struct s_game
 	t_map	*map;
 	t_point	*locations;
 	t_point	p_exit;
+	t_rute	*rute;
 }	t_game;
 
 
@@ -117,9 +118,16 @@ void	check_valid_items(t_map *map);
 // MAP_UTILS2.C
 void	check_accessibility(t_game *game);
 
+// shortest_way.c
+int		find_the_shortest_way(t_game *game);
+int		distance_bfs(t_game *game, t_point start, t_point end);
+
 // shortest_way_utils.c
 int		get_pocisions_of_items(t_game *game);
+int		**init_costs(t_game *game);
 
+// shortest_way_utils1.c
+int		best_pick_up_order(t_game *game);
 
 void	free_matriz(char ***matriz);
 void	free_matriz_int(int ***matriz, size_t size);
@@ -128,5 +136,4 @@ void	free_queue(t_queue *q);
 
 int		key_press(int keycode, t_game *game);
 
-void	find_the_shortest_way(t_game *game);
 #endif

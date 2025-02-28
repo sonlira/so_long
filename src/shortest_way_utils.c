@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/26 22:33:59 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/26 22:53:52 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/28 19:23:41 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,4 +86,27 @@ int	get_pocisions_of_items(t_game *game)
 		game->locations[rc.col++] = coins[rc.row++];
 	game->locations[rc.col] = game->p_exit;
 	return (free(coins), 1);
+}
+
+int	**init_costs(t_game *game)
+{
+	int	**matriz;
+	int	row;
+
+	if (!game)
+		return (NULL);
+	if (game->t_coins < 1)
+		return (NULL);
+	matriz = ft_calloc(game->t_coins + 2, sizeof(int *));
+	if (!matriz)
+		return (NULL);
+	row = 0;
+	while (row < game->t_coins + 2)
+	{
+		matriz[row] = ft_calloc(game->t_coins + 2, sizeof(int));
+		if (!matriz[row])
+			return (free_matriz_int(&matriz, game->t_coins + 2), NULL);
+		row++;
+	}
+	return (matriz);
 }
