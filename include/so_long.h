@@ -6,15 +6,15 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:38:11 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/28 20:23:55 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/02 00:19:48 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SO_LONG_H
 # define SO_LONG_H
 
-# ifndef PIXEL
-#  define PIXEL 40
+# ifndef PX
+#  define PX 65
 # endif
 
 # include "mlx.h"
@@ -84,10 +84,11 @@ typedef struct s_game
 {
 	void	*mlx;
 	void	*win;
-	void	*character;
-	void	*wall;
-	void	*exit;
-	void	*floor;
+	void	*p;
+	void	*w;
+	void	*e;
+	void	*f;
+	void	*c;
 	int		t_coins;
 	int		max_moves;
 	t_play	*player;
@@ -97,13 +98,13 @@ typedef struct s_game
 	t_rute	*rute;
 }	t_game;
 
-
+// utils.c
 void	error_exit(const char *msg);
 int		file_lines_ber(int fd);
 t_queue	*create_queue(int size);
 void	enqueue(t_queue *queue, int row, int col);
 t_point	dequeue(t_queue *queue);
-
+// init.c
 void	init_the_so_long(char *file, int lines);
 // MAP.C
 void	init_map(t_game *game, char *file, int size);
@@ -128,6 +129,9 @@ int		**init_costs(t_game *game);
 
 // shortest_way_utils1.c
 int		best_pick_up_order(t_game *game);
+
+// render.c
+void	draw_map(t_game *g);
 
 void	free_matriz(char ***matriz);
 void	free_matriz_int(int ***matriz, size_t size);

@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:22 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/28 21:01:47 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/28 21:27:58 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	find_the_shortest_way(t_game *game)
 	if (!game->rute)
 		return (free(game->locations), free_matriz(&game->map->map), 0);
 	if (best_pick_up_order(game) == -1)
-		return (free(game->rute),free_matriz(&game->map->map), 0);
+		return (free(game->rute), free_matriz(&game->map->map), 0);
 	total_cost_of_the_route(game);
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/28 19:24:50 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/28 19:50:50 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/02/28 21:56:00 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ static int	**calculate_costs(t_game *g)
 				costs[rc.row][rc.col] = distance_bfs(g, se[rc.row], se[rc.col]);
 			else
 				costs[rc.row][rc.col] = 0;
-			printf("[ %d ]", costs[rc.row][rc.col]);
 		}
-		printf("\n");
 	}
 	return (costs);
 }
