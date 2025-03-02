@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:12 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/02 00:27:41 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:02:59 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,19 +16,23 @@ void	start_mlx(t_game *g)
 {
 	int		w;
 	int		h;
-	t_map	*map;
+	int		x;
+	int		y;
 
 	w = PX;
 	h = PX;
-	map = g->map;
+	x = g->map->cols * PX;
+	y = g->map->rows * PX;
 	g->mlx = mlx_init();
-	g->win = mlx_new_window(g->mlx, map->cols * PX, map->rows * PX, "SO_LONG");
+	g->win = mlx_new_window(g->mlx, x, y, "SO_LONG");
 	g->w = mlx_xpm_file_to_image(g->mlx, "assets/1.xpm", &w, &h);
 	g->f = mlx_xpm_file_to_image(g->mlx, "assets/0.xpm", &w, &h);
 	g->p = mlx_xpm_file_to_image(g->mlx, "assets/p.xpm", &w, &h);
 	g->c = mlx_xpm_file_to_image(g->mlx, "assets/c.xpm", &w, &h);
 	g->e = mlx_xpm_file_to_image(g->mlx, "assets/e.xpm", &w, &h);
 	draw_map(g);
+	mlx_hook(g->win, ON_DESTROY, 0, close_window, g);
+	mlx_key_hook(g->win, key_press, g);
 	mlx_loop(g->mlx);
 }
 
@@ -47,7 +51,7 @@ void	init_the_so_long(char *file, int lines)
 		error_exit("Failed to find the best route");
 	printf("max_moves: %d\n",game.max_moves);
 	start_mlx(&game);
-	free_matriz(&game.map->map);
-	free(game.rute);
+	// free_matriz(&game.map->map);
+	// free(game.rute);
 	// mlx_loop(game.mlx);
 }

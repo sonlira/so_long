@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:09 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/26 22:38:11 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/02 18:17:11 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,31 @@ void	free_queue(t_queue *queue)
 		return ;
 	free(queue->points);
 	free(queue);
+}
+
+void	free_mlx(t_game *game)
+{
+	if (!game)
+		error_exit("mlx not initialized");
+	if (game->map->map)
+		free_matriz(&game->map->map);
+	if (game->rute)
+		free(game->rute);
+	if (game->w)
+		mlx_destroy_image(game->mlx, game->w);
+	if (game->f)
+		mlx_destroy_image(game->mlx, game->f);
+	if (game->p)
+		mlx_destroy_image(game->mlx, game->p);
+	if (game->c)
+		mlx_destroy_image(game->mlx, game->c);
+	if (game->e)
+		mlx_destroy_image(game->mlx, game->e);
+	if (game->mlx)
+	{
+		if (game->win)
+			mlx_destroy_window(game->mlx, game->win);
+		mlx_destroy_display(game->mlx);
+		free(game->mlx);
+	}
 }

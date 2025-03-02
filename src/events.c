@@ -6,66 +6,75 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:00 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/02/23 21:08:59 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/02 20:07:53 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "so_long.h"
 
-int	close_window(void)
+int	close_window(t_game *game)
 {
+	// free_matriz(&game->map->map);
+	// free(game->rute);
+	free_mlx(game);
 	exit (0);
 	return (0);
 }
 
-// int is_valid_move(t_game *game, int new_x, int new_y)
-// {
-//     int grid_x = new_x / PIXEL;
-//     int grid_y = new_y / PIXEL;
+int	is_valid_move(t_game *game, t_point new)
+{
+	t_point	rc;
 
-// 	if (game->map[grid_y][grid_x] == '1')
-// 	{
-// 		printf("❌ NO puedes pasar una pared\n");
-// 		return (0);
-// 	}
-// 	if (game->map[grid_y][grid_x] == 'C')
-// 	{
-// 		printf("💰 Recogiste una monedita\n");
-//         game->map[grid_y][grid_x] = '0';
+	rc.row = floor((double)new.row / PX);
+	rc.col = floor((double)new.col / PX);
 
-// 	}
-// 	if (game->map[grid_y][grid_x] == 'E')
-// 	{
-// 		printf("🎉 Llegaste a la salida, ¡ganaste!\n");
-//         exit(0);
-// 	}
-//     return (1);
-// }
+	printf("new col = %d, new row = %d\n", new.col, new.row);
+	printf("rc col = %d, rc row = %d\n", rc.col, rc.row);
+	if (game->map->map[rc.row][rc.col] == WALL)
+	{
+		printf("❌ NO puedes pasar una pared\n");
+		return (0);
+	}
+	if (game->map->map[rc.row][rc.col] == COIN)
+	{
+		printf("💰 Recogiste unas moneditas\n");
+        // game->map->map[rc.row][rc.col] = '0';
 
-// int	key_press(int keycode, t_game *game)
-// {
-// 	int	new_x;
-// 	int	new_y;
+	}
+	if (game->map->map[rc.row][rc.col] == EXIT)
+	{
+		printf("🎉 Llegaste a la salida, ¡ganaste!\n");
+        // exit(0);
+	}
+    return (1);
+}
 
-// 	new_x = game->img_x;
-// 	new_y = game->img_y;
-// 	if (keycode == ESC_KEY)
-// 		exit(EXIT_SUCCESS);
-// 	else if (keycode == KEY_W)
-// 		new_y -= PIXEL;
-// 	else if (keycode == KEY_S)
-// 		new_y += PIXEL;
-// 	else if (keycode == KEY_A)
-// 		new_x -= PIXEL;
-// 	else if (keycode == KEY_D)
-// 		new_x += PIXEL;
-// 	if (is_valid_move(game, new_x, new_y))
-// 	{
-// 		game->img_x = new_x;
-// 		game->img_y = new_y;
-// 		mlx_clear_window(game->mlx, game->win);
-// 		mlx_put_image_to_window(game->mlx, game->win, game->img, game->img_x, game->img_y);
-// 	}
-// 	printf("x = %d, y = %d\n", game->img_x, game->img_y);
-// 	return (0);
-// }
+int	key_press(int keycode, t_game *g)
+{
+	t_point	new;
+
+	new.row = g->player->row * 65;
+	new.col = g->player->col * 65;
+	if (keycode == ESC_KEY)
+		close_window(g);
+	else if (keycode == KEY_W)
+		new.row -= PX;
+	else if (keycode == KEY_S)
+		new.row += PX;
+	else if (keycode == KEY_A)
+		new.col -= PX;
+	else if (keycode == KEY_D)
+		new.col += PX;
+	if (is_valid_move(g, new))
+	{
+		g->map->map[g->player->row][g->player->col] = FLOOR;
+		g->player->row = floor((double)new.row / PX);
+		g->player->col = floor((double)new.col / PX);
+		g->map->map[g->player->row][g->player->col] = PLAYER;
+		mlx_clear_window(g->mlx, g->win);
+		draw_map(g);
+		// mlx_put_image_to_window(g->mlx, g->win, g->p, g->player->col * PX, g->player->row * PX);
+	}
+	printf("col = %d, row = %d\n", g->player->col, g->player->row);
+	return (0);
+}

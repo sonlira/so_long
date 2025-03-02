@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:38:11 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/02 00:19:48 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/02 19:10:30 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <stdio.h>
 # include <fcntl.h>
 # include <limits.h>
+# include <math.h>
 
 enum
 {
@@ -133,11 +134,15 @@ int		best_pick_up_order(t_game *game);
 // render.c
 void	draw_map(t_game *g);
 
+// free.c
 void	free_matriz(char ***matriz);
 void	free_matriz_int(int ***matriz, size_t size);
 void	free_matriz_point(t_point ***matriz, size_t size);
 void	free_queue(t_queue *q);
+void	free_mlx(t_game *game);
 
+// events.c
+int		close_window(t_game *game);
 int		key_press(int keycode, t_game *game);
 
 #endif
