@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:38:11 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/03 00:57:19 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/03 01:51:56 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ enum
 	COIN		= 'C',
 	EXIT		= 'E',
 };
-
-
 typedef struct s_point
 {
 	int	row;
@@ -135,7 +133,7 @@ int		best_pick_up_order(t_game *game);
 void	draw_map(t_game *game);
 
 // player.c
-int update_pos_player(t_game *game, t_point new);
+int		update_pos_player(t_game *game, t_point new);
 
 // free.c
 void	free_matriz(char ***matriz);

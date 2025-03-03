@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:12 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/03 01:29:27 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/03 01:42:45 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,11 @@ static void	is_exit(t_game *game, t_point new)
 		{
 			ft_putendl_fd("You lost! 😞 Too many moves", EXIT_SUCCESS);
 			free_mlx(game);
+			exit(0);
 		}
 		ft_putendl_fd("🎉🎉🎉 You won!, you're incredible! 🎉🎉🎉", EXIT_SUCCESS);
 		free_mlx(game);
+		exit(0);
 	}
 }
 

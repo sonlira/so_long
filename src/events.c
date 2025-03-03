@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:00 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/03 01:07:56 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/03 01:49:18 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 int	close_window(t_game *game)
 {
 	free_mlx(game);
+	exit(0);
 	return (0);
 }
 
@@ -24,7 +25,6 @@ static int	is_valid_move(t_game *game, t_point new)
 
 	rc.row = new.row / PX;
 	rc.col = new.col / PX;
-
 	if (game->map->map[rc.row][rc.col] == WALL)
 	{
 		ft_putendl_fd("❌ Maybe when you're a ghost 👻", EXIT_SUCCESS);
@@ -48,7 +48,6 @@ static void	print_date(t_game *game)
 	ft_putnbr_fd(game->player->p_coins, EXIT_SUCCESS);
 	ft_putendl_fd("\n+=======================================+", EXIT_SUCCESS);
 	ft_putendl_fd("\n\n", EXIT_SUCCESS);
-
 }
 
 int	key_press(int keycode, t_game *g)

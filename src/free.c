@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:09 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/02 23:55:49 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/03 01:42:10 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,4 @@ void	free_mlx(t_game *game)
 		free(game->mlx);
 	}
 	ft_putendl_fd("game closed!!!", EXIT_SUCCESS);
-	exit(0);
 }
