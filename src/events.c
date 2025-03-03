@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:00 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/03 14:18:59 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:12:43 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,10 +56,10 @@ int	key_press(int keycode, t_game *g)
 
 	new.row = g->player->row * PX;
 	new.col = g->player->col * PX;
-	print_date(g);
 	if (keycode == ESC_KEY)
 		close_window(g);
-	else if (keycode == KEY_W)
+	print_date(g);
+	if (keycode == KEY_W)
 		new.row -= PX;
 	else if (keycode == KEY_S)
 		new.row += PX;

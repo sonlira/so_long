@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:12 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/03 14:19:20 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:08:19 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,15 @@ static void	is_exit(t_game *game, t_point new)
 	rc.col = new.col / PX;
 	if (game->map->map[rc.row][rc.col] == EXIT)
 	{
-		game->player->p_moves++;
 		if (game->player->p_coins != game->t_coins)
 		{
+			game->player->p_moves++;
 			ft_putendl_fd("You lack collectibles to leave 🔍", 1);
 			return ;
 		}
 		if (game->player->p_moves > game->max_moves)
 		{
-			ft_putendl_fd("You lost! 😞 Too many moves", 1);
+			ft_putendl_fd("💀🏳️  You lost! 😞 Too many moves 💀🏳️", 1);
 			free_mlx(game);
 			exit(0);
 		}

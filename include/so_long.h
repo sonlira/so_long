@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:38:11 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/03 01:51:56 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/03 15:15:39 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,53 +97,46 @@ typedef struct s_game
 	t_rute	*rute;
 }	t_game;
 
+// init.c
+void	init_the_so_long(char *file, int lines);
+// map.c
+void	init_map(t_game *game, char *file, int size);
+// map_utils.C
+int		**start_matriz_int(t_map *map, int number);
+void	create_map(t_game *game, char *file, int lines);
+void	check_rectangular_shape(t_map *map);
+// map_utils1.C
+void	check_one_on_edges(t_map *map, int lines);
+void	check_items(t_game *game, int lines);
+void	check_valid_items(t_map *map);
+// map_utils2.C
+void	check_accessibility(t_game *game);
+// shortest_way.c
+int		find_the_shortest_way(t_game *game);
+int		distance_bfs(t_game *game, t_point start, t_point end);
+// shortest_way_utils.c
+int		get_pocisions_of_items(t_game *game);
+int		**init_costs(t_game *game);
+// shortest_way_utils1.c
+int		best_pick_up_order(t_game *game);
+// render.c
+void	draw_map(t_game *game);
+// player.c
+int		update_pos_player(t_game *game, t_point new);
+// events.c
+int		close_window(t_game *game);
+int		key_press(int keycode, t_game *game);
 // utils.c
 void	error_exit(const char *msg);
 int		file_lines_ber(int fd);
 t_queue	*create_queue(int size);
 void	enqueue(t_queue *queue, int row, int col);
 t_point	dequeue(t_queue *queue);
-// init.c
-void	init_the_so_long(char *file, int lines);
-// MAP.C
-void	init_map(t_game *game, char *file, int size);
-// MAP_UTILS.C
-int		**start_matriz_int(t_map *map, int number);
-void	create_map(t_game *game, char *file, int lines);
-void	check_rectangular_shape(t_map *map);
-// MAP_UTILS1.C
-void	check_one_on_edges(t_map *map, int lines);
-void	check_items(t_game *game, int lines);
-void	check_valid_items(t_map *map);
-// MAP_UTILS2.C
-void	check_accessibility(t_game *game);
-
-// shortest_way.c
-int		find_the_shortest_way(t_game *game);
-int		distance_bfs(t_game *game, t_point start, t_point end);
-
-// shortest_way_utils.c
-int		get_pocisions_of_items(t_game *game);
-int		**init_costs(t_game *game);
-
-// shortest_way_utils1.c
-int		best_pick_up_order(t_game *game);
-
-// render.c
-void	draw_map(t_game *game);
-
-// player.c
-int		update_pos_player(t_game *game, t_point new);
-
 // free.c
 void	free_matriz(char ***matriz);
 void	free_matriz_int(int ***matriz, size_t size);
 void	free_matriz_point(t_point ***matriz, size_t size);
 void	free_queue(t_queue *q);
 void	free_mlx(t_game *game);
-
-// events.c
-int		close_window(t_game *game);
-int		key_press(int keycode, t_game *game);
 
 #endif
