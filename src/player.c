@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:12 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/03 01:42:45 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:19:20 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	is_coin(t_game *game, t_point new)
 	rc.col = new.col / PX;
 	if (game->map->map[rc.row][rc.col] == COIN)
 	{
-		ft_putendl_fd("💰 Collectible found!!! 👏", EXIT_SUCCESS);
+		ft_putendl_fd("💰 Collectible found!!! 👏", 1);
 		game->player->p_moves++;
 		game->player->p_coins++;
 	}
@@ -37,16 +37,16 @@ static void	is_exit(t_game *game, t_point new)
 		game->player->p_moves++;
 		if (game->player->p_coins != game->t_coins)
 		{
-			ft_putendl_fd("You lack collectibles to leave 🔍", EXIT_SUCCESS);
+			ft_putendl_fd("You lack collectibles to leave 🔍", 1);
 			return ;
 		}
 		if (game->player->p_moves > game->max_moves)
 		{
-			ft_putendl_fd("You lost! 😞 Too many moves", EXIT_SUCCESS);
+			ft_putendl_fd("You lost! 😞 Too many moves", 1);
 			free_mlx(game);
 			exit(0);
 		}
-		ft_putendl_fd("🎉🎉🎉 You won!, you're incredible! 🎉🎉🎉", EXIT_SUCCESS);
+		ft_putendl_fd("🎉🎉🎉 You won!, you're incredible! 🎉🎉🎉", 1);
 		free_mlx(game);
 		exit(0);
 	}

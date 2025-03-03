@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:16 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/03 01:51:01 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/03 14:18:11 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 	{
-		ft_putendl_fd("Usage: ./so_long <file.ber>", EXIT_FAILURE);
+		ft_putendl_fd("Usage: ./so_long <file.ber>", 2);
 		return (EXIT_FAILURE);
 	}
 	is_valid_file(argv[1]);

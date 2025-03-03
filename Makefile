@@ -6,7 +6,7 @@
 #    By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/12 17:49:36 by abaldelo          #+#    #+#              #
-#    Updated: 2025/03/02 20:33:18 by abaldelo         ###   ########.fr        #
+#    Updated: 2025/03/03 14:25:05 by abaldelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,13 +25,13 @@ LIBFTDIR = lib/libft
 MLXDIR = lib/minilibx-linux
 
 # Archivos fuente y objetos
-SRCS = $(wildcard $(SRCDIR)/*.c)
+SRCS = $(shell find $(SRCDIR) -name "*.c")
 OBJS = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 
 # Librerías
 LIBFT = $(LIBFTDIR)/libft.a
 MLX = $(MLXDIR)/libmlx.a
-LIBS = -L$(MLXDIR) -lmlx -L$(LIBFTDIR) -lft -lXext -lX11 -lm -lbsd
+LIBS = -L$(MLXDIR) -lmlx -L$(LIBFTDIR) -lft -lXext -lX11 -lXrender -lm -lbsd
 
 # Regla principal
 all: $(NAME)
