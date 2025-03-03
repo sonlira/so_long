@@ -6,7 +6,7 @@
 #    By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/12 17:49:36 by abaldelo          #+#    #+#              #
-#    Updated: 2025/02/25 23:03:51 by abaldelo         ###   ########.fr        #
+#    Updated: 2025/03/02 20:33:18 by abaldelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ NAME = so_long
 # Compilador y flags
 CC = cc
 CFLAGS = -Wall -Wextra -Werror -Iinclude -Ilib/minilibx-linux -Ilib/libft
- #-g3 -fsanitize=address
+#-g3 -fsanitize=address
+
 # Directorios
 SRCDIR = src
 OBJDIR = obj
@@ -35,18 +36,21 @@ LIBS = -L$(MLXDIR) -lmlx -L$(LIBFTDIR) -lft -lXext -lX11 -lm -lbsd
 # Regla principal
 all: $(NAME)
 
+# Crear el directorio de objetos si no existe
+$(OBJDIR):
+	mkdir -p $(OBJDIR)
+
 # Compilar los archivos fuente en objetos
-$(OBJDIR)/%.o: $(SRCDIR)/%.c
-	@mkdir -p $(OBJDIR)
+$(OBJDIR)/%.o: $(SRCDIR)/%.c | $(OBJDIR)
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # Compilar la libft
 $(LIBFT):
-	make -C $(LIBFTDIR)
+	make -C $(LIBFTDIR) -s
 
 # Compilar MiniLibX
 $(MLX):
-	make -C $(MLXDIR)
+	make -C $(MLXDIR) -s
 
 # Enlazar el juego con las librerías
 $(NAME): $(OBJS) $(LIBFT) $(MLX)

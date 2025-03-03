@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:00 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/02 20:07:53 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/03 01:07:56 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,47 +14,50 @@
 
 int	close_window(t_game *game)
 {
-	// free_matriz(&game->map->map);
-	// free(game->rute);
 	free_mlx(game);
-	exit (0);
 	return (0);
 }
 
-int	is_valid_move(t_game *game, t_point new)
+static int	is_valid_move(t_game *game, t_point new)
 {
 	t_point	rc;
 
-	rc.row = floor((double)new.row / PX);
-	rc.col = floor((double)new.col / PX);
+	rc.row = new.row / PX;
+	rc.col = new.col / PX;
 
-	printf("new col = %d, new row = %d\n", new.col, new.row);
-	printf("rc col = %d, rc row = %d\n", rc.col, rc.row);
 	if (game->map->map[rc.row][rc.col] == WALL)
 	{
-		printf("❌ NO puedes pasar una pared\n");
+		ft_putendl_fd("❌ Maybe when you're a ghost 👻", EXIT_SUCCESS);
 		return (0);
 	}
-	if (game->map->map[rc.row][rc.col] == COIN)
-	{
-		printf("💰 Recogiste unas moneditas\n");
-        // game->map->map[rc.row][rc.col] = '0';
+	return (1);
+}
 
-	}
-	if (game->map->map[rc.row][rc.col] == EXIT)
-	{
-		printf("🎉 Llegaste a la salida, ¡ganaste!\n");
-        // exit(0);
-	}
-    return (1);
+static void	print_date(t_game *game)
+{
+	ft_putendl_fd("+=======================================+", EXIT_SUCCESS);
+	ft_putendl_fd("+               SO_LONG                 +", EXIT_SUCCESS);
+	ft_putendl_fd("+=======================================+", EXIT_SUCCESS);
+	ft_putstr_fd("    * 👣 Maximum movement 👣: ", EXIT_SUCCESS);
+	ft_putnbr_fd(game->max_moves, EXIT_SUCCESS);
+	ft_putstr_fd("\n    * 👣 Your movements 👣: ", EXIT_SUCCESS);
+	ft_putnbr_fd(game->player->p_moves, EXIT_SUCCESS);
+	ft_putstr_fd("\n    * 💰 Missing collectibles 🍑: ", EXIT_SUCCESS);
+	ft_putnbr_fd(game->t_coins, EXIT_SUCCESS);
+	ft_putstr_fd("\n    * 💰 Collection items found 🍑: ", EXIT_SUCCESS);
+	ft_putnbr_fd(game->player->p_coins, EXIT_SUCCESS);
+	ft_putendl_fd("\n+=======================================+", EXIT_SUCCESS);
+	ft_putendl_fd("\n\n", EXIT_SUCCESS);
+
 }
 
 int	key_press(int keycode, t_game *g)
 {
 	t_point	new;
 
-	new.row = g->player->row * 65;
-	new.col = g->player->col * 65;
+	new.row = g->player->row * PX;
+	new.col = g->player->col * PX;
+	print_date(g);
 	if (keycode == ESC_KEY)
 		close_window(g);
 	else if (keycode == KEY_W)
@@ -67,14 +70,9 @@ int	key_press(int keycode, t_game *g)
 		new.col += PX;
 	if (is_valid_move(g, new))
 	{
-		g->map->map[g->player->row][g->player->col] = FLOOR;
-		g->player->row = floor((double)new.row / PX);
-		g->player->col = floor((double)new.col / PX);
-		g->map->map[g->player->row][g->player->col] = PLAYER;
+		update_pos_player(g, new);
 		mlx_clear_window(g->mlx, g->win);
 		draw_map(g);
-		// mlx_put_image_to_window(g->mlx, g->win, g->p, g->player->col * PX, g->player->row * PX);
 	}
-	printf("col = %d, row = %d\n", g->player->col, g->player->row);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:38:11 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/02 19:10:30 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/03 00:57:19 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,10 @@ int		**init_costs(t_game *game);
 int		best_pick_up_order(t_game *game);
 
 // render.c
-void	draw_map(t_game *g);
+void	draw_map(t_game *game);
+
+// player.c
+int update_pos_player(t_game *game, t_point new);
 
 // free.c
 void	free_matriz(char ***matriz);
