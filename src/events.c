@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:00 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/03 15:12:43 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:42:45 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,8 @@ int	key_press(int keycode, t_game *g)
 	new.row = g->player->row * PX;
 	new.col = g->player->col * PX;
 	if (keycode == ESC_KEY)
-		close_window(g);
-	print_date(g);
-	if (keycode == KEY_W)
+		return (print_date(g), close_window(g), 0);
+	else if (keycode == KEY_W)
 		new.row -= PX;
 	else if (keycode == KEY_S)
 		new.row += PX;
@@ -67,11 +66,14 @@ int	key_press(int keycode, t_game *g)
 		new.col -= PX;
 	else if (keycode == KEY_D)
 		new.col += PX;
+	else
+		return (0);
 	if (is_valid_move(g, new))
 	{
 		update_pos_player(g, new);
 		mlx_clear_window(g->mlx, g->win);
 		draw_map(g);
+		print_date(g);
 	}
 	return (0);
 }

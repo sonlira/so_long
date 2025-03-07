@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:16 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/03 14:18:11 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/07 17:51:21 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,11 @@ static void	is_valid_file(char *file)
 	char	*extent;
 
 	extent = ft_strrchr(file, '.');
-	if (!extent || ft_memcmp(extent, ".ber", 5) != 0)
+	if (ft_strlen(file) == ft_strlen(".ber"))
+		error_exit("Extension of invalid file");
+	else if (!ft_memcmp(file, "..ber", ft_strlen("..ber")))
+		error_exit("Extension of invalid file");
+	else if (!extent || ft_memcmp(extent, ".ber", ft_strlen(".ber")) != 0)
 		error_exit("Extension of invalid file");
 }
 
