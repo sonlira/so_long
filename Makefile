@@ -6,7 +6,7 @@
 #    By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/02/12 17:49:36 by abaldelo          #+#    #+#              #
-#    Updated: 2025/03/03 14:25:05 by abaldelo         ###   ########.fr        #
+#    Updated: 2025/03/09 17:58:20 by abaldelo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,10 @@ LIBFTDIR = lib/libft
 MLXDIR = lib/minilibx-linux
 
 # Archivos fuente y objetos
-SRCS = $(shell find $(SRCDIR) -name "*.c")
+# $(shell find $(SRCDIR) -name "*.c")
+SRCS = src/events.c src/free.c src/init.c src/main.c src/map_utils.c src/map_utils1.c src/map_utils2.c src/map.c\
+		src/player.c src/render.c src/shortest_way_utils.c src/shortest_way_utils1.c src/shortest_way.c src/utils.c
+
 OBJS = $(patsubst $(SRCDIR)/%.c, $(OBJDIR)/%.o, $(SRCS))
 
 # Librerías

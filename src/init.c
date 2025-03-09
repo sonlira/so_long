@@ -6,7 +6,7 @@
 /*   By: abaldelo <abaldelo@student.42madrid.com    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/02/12 17:40:12 by abaldelo          #+#    #+#             */
-/*   Updated: 2025/03/07 17:56:30 by abaldelo         ###   ########.fr       */
+/*   Updated: 2025/03/09 17:55:25 by abaldelo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,19 @@ static int	load_images(t_game *g)
 
 	w = PX;
 	h = PX;
-	g->w = mlx_xpm_file_to_image(g->mlx, "textures/1.xpm", &w, &h);
+	g->w = mlx_xpm_file_to_image(g->mlx, "assets/1.xpm", &w, &h);
 	if (!g->w)
 		return (0);
-	g->f = mlx_xpm_file_to_image(g->mlx, "textures/0.xpm", &w, &h);
+	g->f = mlx_xpm_file_to_image(g->mlx, "assets/0.xpm", &w, &h);
 	if (!g->f)
 		return (0);
-	g->p = mlx_xpm_file_to_image(g->mlx, "textures/p.xpm", &w, &h);
+	g->p = mlx_xpm_file_to_image(g->mlx, "assets/p.xpm", &w, &h);
 	if (!g->p)
 		return (0);
-	g->c = mlx_xpm_file_to_image(g->mlx, "textures/c.xpm", &w, &h);
+	g->c = mlx_xpm_file_to_image(g->mlx, "assets/c.xpm", &w, &h);
 	if (!g->c)
 		return (0);
-	g->e = mlx_xpm_file_to_image(g->mlx, "textures/e.xpm", &w, &h);
+	g->e = mlx_xpm_file_to_image(g->mlx, "assets/e.xpm", &w, &h);
 	if (!g->e)
 		return (0);
 	return (1);
